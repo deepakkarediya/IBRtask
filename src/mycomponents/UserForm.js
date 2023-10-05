@@ -3,6 +3,7 @@ import axios from 'axios';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
+import Listuser from './Listuser';
 
 const UserForm = () => {
   const [formData, setFormData] = useState({
@@ -13,10 +14,10 @@ const UserForm = () => {
     country: '',
     interests: '',
   });
-
-
-
-
+  
+  
+  
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -24,17 +25,17 @@ const UserForm = () => {
       [name]: value,
     });
   };
-
+  
   const handlePhotoChange = (e) => {
     setFormData({
       ...formData,
       photo: e.target.files[0],
     });
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     // Create a FormData object to send the file
     const formDataToSend = new FormData();
     formDataToSend.append('name', formData.name);
@@ -43,7 +44,7 @@ const UserForm = () => {
     formDataToSend.append('country', formData.country);
     formDataToSend.append('interests', formData.interests);
     formDataToSend.append('photo', formData.photo);
-
+    
     try {
 
       const response = await axios.post('http://localhost:4000/api/user', formDataToSend);
@@ -61,12 +62,17 @@ const UserForm = () => {
       console.error('Error creating user:', error);
     }
   };
+  
+  
+  const [Data, setData] = useState([]);
   const handleget = async (e) => {
     e.preventDefault();
 
     try {
-
+      
       const response = await axios.get('http://localhost:4000/api/user',);
+
+      setData(response.data)
       console.log('User created successfully:', response.data);
 
 
@@ -153,6 +159,9 @@ const UserForm = () => {
           </form>
         </div>
       </Stack>
+      <Listuser datas={Data}/>
+
+      
 
             {/* <div>
           <label>Name:</label>
